@@ -1,0 +1,122 @@
+import { Callout } from "nextra-theme-docs";
+
+# Questions
+
+A question is the smallest unit of a form, and enables a single piece of data to be collected.
+
+```json copy
+{
+  "label": "What is the reason for conducting the HIV test?",
+  "type": "obs",
+  "questionOptions": {
+    "rendering": "select",
+    "concept": "ce3816e7-082d-496b-890b-a2b169922c22",
+    "answers": [
+      {
+        "concept": "7398c91a-8db8-480d-8130-1a92cc208ded",
+        "label": "Inconclusive HIV Result"
+      },
+      {
+        "concept": "a6ad599d-2bc4-47b7-81fe-a38e88867c1d",
+        "label": "Self Initiative"
+      },
+      {
+        "concept": "0e65e5fd-a1d8-4730-a991-75a1d703cba6",
+        "label": "HIV Self Test Positive"
+      },
+      {
+        "concept": "6e768c50-a239-45ff-9920-2c6a9352320e",
+        "label": "Index Client Testing"
+      },
+      {
+        "concept": "cb099534-b609-4561-9d4c-dd2fc74cedaf",
+        "label": "Assisted Partner Notification (APN)"
+      },
+      {
+        "concept": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label": "Other"
+      }
+    ]
+  },
+  "isHidden": "false",
+  "required": "true",
+  "unspecified": "true",
+  "hide": {
+    "hideWhenExpression": "everTestedForHIV !== 'cf82933b-3f3f-45e7-a5ab-5d31aaee3da3'"
+  },
+  "behaviours": [
+    {
+      "intent": "HTS_RETROSPECTIVE",
+      "required": "true",
+      "unspecified": "true"
+    },
+    {
+      "intent": "HTS_PRETEST",
+      "required": "true"
+    },
+    {
+      "intent": "*",
+      "required": "false"
+    }
+  ],
+  "id": "reasonForTesting"
+}
+```
+
+## Question properties
+
+Here's a reference of the various properties you can specify in a question definition:
+
+- `label`: The actual content of the question. This label is what gets rendered as the question label.
+
+- `type`: Provides information of how the submission value will be processed. It helps the engine map the target submission handler to a field. Currently supported types include: obs | obsGroup | encounterLocation
+
+  - `obs`: questions of this `type` will yield an observation as a submit-able.
+
+  - `obsGroup`: questions of this `type` will yield an obs group as a submit-able.
+
+  - `encounterLocation`: questions of this `type` will capture a location that will be associated to the current encounter.
+
+- `questionOptions`: An object defining other properties of a question:
+
+  - `rendering`: The field type of the question. Currently supported types include: select | text | date | number | checkbox | radio | repeating | group | content-switcher | encounter-location | textarea | toggle | fixed-value read more about supported types.
+
+  - `concept`: The concept UUID of the backing concept for this field.
+
+  - `defaultValue`: The default value to be associated to this question.
+
+  - `answers`: An array of answers scoped to a question. An answer definition consists of a concept UUID and label pair. Below is an example of answers to a `Current HIV status` question:
+
+    ![Answers](/answers.png)
+
+- `isHidden`: A boolean value that determines field visibility. In most cases, this value is driven by hide expressions.
+
+- `hide`: You can use this to define logic for hiding a question based on certain conditions. To do so, you provide a JavaScript expression that evaluates to a boolean value:
+
+  ```json copy
+  {
+    "hide": {
+      "hideWhenExpression": "onArt!== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+    }
+    // This logic hides the question with the `onArt` id if the value of its
+    // concept does not match the supplied value
+  }
+  ```
+
+- `required`: If set `true`, that form field is considered to be mandatory. Defaults to false.
+
+- `unspecified`: If set `true`, the form engine will render a widget(as part of this field) that can be used to mark this field as unspecified. By default, a mandatory field can't pass validation without a valid `value`. However, think of a scenario were it’s almost impossible to provide a value eg. when filling out a form in retrospective were a value wasn’t collected on the paper form. For such scenarios, a `required` field can be marked as `unspecified`.
+
+      <Callout emoji="⚠️" type="warning">
+
+  **What is the value of Unspecified?**
+
+  Unspecified does not create an observation in the database. It is the
+  equivalent of a NULL value in database systems (but does not create a NULL
+  value). Unspecified is not a concept. It is rendered by the form engine and
+  not persisted in the database.
+
+      </Callout>
+
+- `validators`: An `array` in which you provide validation logic for the specific question. Learn more about validators.
+- `behaviours`: An `array` of supported behaviours. Learn more about form behaviours.

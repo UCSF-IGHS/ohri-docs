@@ -1,0 +1,80 @@
+# Technical Implementation of OHRI forms
+
+OHRI Forms is a lightweight form engine written in React and powered by Formik and Carbon UX. It uses FHIR along with OpenMRS' Web Services to communicate with the associated OpenMRS instance.
+
+Technically, OHRI Forms is a React component that requires the following props:
+
+## Mapping Controls
+
+Fields are mapped to their controls via a registry system. This is highly extensible and easy to override the default controls.
+
+```json copy
+{
+  "label":"Which of the following prevention services was the client referred to?",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"checkbox",
+    "concept":"5f394708-ca7d-4558-8d23-a73de181b02d",
+    "answers": [...]
+  },
+  "id":"referredToPreventionServices"
+}
+```
+
+The field above has the rendering of type checkbox, the engine will simply check the registry for this kind of control and instantiates an instance of this control.
+
+## Submission Handlers
+
+These handle submission at the field level. The engine doesn’t know how fields aggregate or compose primitive values into objects that the backend expects ie. an Observation. The form engine by default defines a set of base handlers eg. `ObsSubmissionHandler`, `EncounterLocationSubmissionHandler` etc.
+
+These are also mapped using the registry system based on the `type` property of a form field. On form submission, the engine simply collects all field submissions and aggregates them into some object that OpenMRS understands.
+
+## Extending the Registry
+
+The engine exposes an API to work with the registry.
+
+- `addHandler(handler: HandlerRegistryItem)` Adds submission handler to the handlers registry
+
+  ```tsx
+  import { SomeCustomHandler } from "./handlers";
+  import { addHandler } from "openmrs-ohri-form-engine-lib";
+
+  // Add to registry
+  addHandler({
+    id: "customHandler",
+    component: SomeCustomHandler,
+    type: "someCustomType",
+  });
+  ```
+
+- `addvalidator(validator: ValidatorRegistryItem)`
+
+  Adds validator to the validators registry
+
+  ```tsx
+  import { SomeCustomValidator } from "./validators";
+  import { addvalidator } from "openmrs-ohri-form-engine-lib";
+
+  // Add to registry
+  addvalidator({
+    id: "customValidator",
+    component: SomeCustomValidator,
+    type: "customValidatorType",
+  });
+  ```
+
+- `addFieldComponent(control: ControlRegistryItem)`
+
+  Adds custom control to the field controls registry
+
+  ```tsx
+  import { BootstrapDropdown } from "./controls";
+  import { addFieldComponent } from "openmrs-ohri-form-engine-lib";
+
+  // Add to registry
+  addFieldComponent({
+    id: "bootstrapDropdown",
+    component: BootstrapDropdown,
+    type: "bootstrapDropdownType",
+  });
+  ```

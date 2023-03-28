@@ -1,0 +1,138 @@
+import { Callout } from "nextra-theme-docs";
+
+# Field Validation
+
+OHRI Forms is designed to support arbitrarily complex form field validations. Validation can be broken down into two types:
+
+1. Date based validation
+2. JavaScript expression based validation
+
+## Date based validation
+
+This type of validation enforces certain conditions for date inputs. You can use date-based validation to guarantee that a Date input only allows:
+
+- Past or present dates
+- Past, present or future dates
+
+```json copy
+{
+  "label": "Date of Viral Load Result",
+  "type": "obs",
+  "questionOptions": {
+    "rendering": "date",
+    "concept": "163281AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  },
+  "validators": [
+    {
+      "type": "date",
+      "allowFutureDates": "false"
+    }
+  ],
+  "id": "dateOfViralLoadResult"
+}
+```
+
+The above question will not accept future dates, and this is the default behaviour of the date validator. You can override this behaviour and permit future dates by setting `allowFutureDates` to true in your validator definition:
+
+```json copy
+{
+  "validators": [
+    {
+      "type": "date",
+      "allowFutureDates": "true"
+    }
+  ]
+}
+```
+
+## Validation based on JavaScript expressions
+
+When using expressions to validate form inputs, you must provide a JavaScript expression that resolves to a boolean value. Below is an expression-based example from a form used for collecting Cervical Cancer screening data:
+
+```json copy
+{
+  "type": "obs",
+  "label": "HIV Status",
+  "isExpanded": "true",
+  "questions": [
+    {
+      "label": "What is your current HIV status?",
+      "id": "hivStatus",
+      "type": "obs",
+      "required": "true",
+      "questionOptions": {
+        "rendering": "select",
+        "concept": "9e4d6436-4040-46a3-a0ae-6dbc0acfe593",
+        "answers": [
+          {
+            "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+            "label": "HIV positive"
+          },
+          {
+            "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+            "label": "HIV negative"
+          },
+          {
+            "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+            "label": "Unknown"
+          }
+        ]
+      },
+      "validators": []
+    },
+    {
+      "label": "Are you currently in HIV care or under ART?",
+      "id": "currentlyOnArt",
+      "type": "obs",
+      "questionOptions": {
+        "rendering": "select",
+        "concept": "a8afba58-1350-11df-a1f1-0026b9348838",
+        "answers": [
+          {
+            "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+            "label": "Yes"
+          },
+          {
+            "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+            "label": "No"
+          }
+        ]
+      },
+      "validators": [
+        {
+          "type": "js_expression",
+          "failsWhenExpression": "isEmpty(myValue) && hivStatus == 'a896f3a6-1350-11df-a1f1-0026b9348838'",
+          "message": "Please indicate whether the client is currently in HIV care or under ART"
+        }
+      ]
+    }
+  ]
+}
+```
+
+<Callout emoji="ℹ️" type="info">
+  This question assumes that only HIV Positive clients are expected to be
+  engaged in active HIV care.
+</Callout>
+
+A lot is going on in this example. Let us attempt to break it down step by step. The first question (id `hivStatus`) seeks to establish the client's HIV status. The next question (id `currentlyOnArt`) asks whether the client is actively receiving HIV care. Note that this second question has validation enabled.
+
+```json copy
+{
+  // ...
+  "validators": [
+    {
+      "type": "js_expression",
+      "failsWhenExpression": "isEmpty(myValue) && hivStatus == 'a896f3a6-1350-11df-a1f1-0026b9348838'",
+      "message": "Please indicate whether the client is currently in HIV care or under ART"
+    }
+  ]
+  // ...
+}
+```
+
+The expression evaluates two conditions:
+
+1. That this question(id: `currentlyOnArt`) gets answered. `isEmpty(myValue)` returns `true` if this question does not get answered, and false otherwise.
+
+2. That question with `hivStatus` has the answer with the value `a896f3a6-1350-11df-a1f1-0026b9348838`. This value corresponds to the coded answer labelled `HIV Positive`.

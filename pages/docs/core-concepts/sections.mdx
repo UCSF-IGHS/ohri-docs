@@ -1,0 +1,41 @@
+# Sections
+
+A section is an element of a form schema that groups together related questions. Sections will be rendered in "expanded mode" by default. Set `isExpanded` to `false` in the section definition if you want section rendered in "collapsed mode".
+
+Below is an example of a basic section:
+
+```json copy
+{
+  "label": "Testing history",
+  "isExpanded": true,
+  "questions": [
+    {
+      "label": "What was the result of the last HIV test?",
+      "type": "obs",
+      "questionOptions": {
+        "rendering": "select",
+        "concept": "159427AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "answers": [
+          {
+            "concept": "6378487b-584d-4422-a6a6-56c8830873ff",
+            "label": "Positive"
+          },
+          {
+            "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "label": "Negative"
+          },
+          {
+            "concept": "7398c91a-8db8-480d-8130-1a92cc208ded",
+            "label": "Inconclusive"
+          },
+          {
+            "concept": "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "label": "Unknown"
+          }
+        ]
+      },
+      "id": "lastHIVTestResult"
+    }
+  ]
+}
+```

@@ -1,0 +1,28 @@
+# Forms
+
+A form is a collection of form fields classified through `pages` and `sections`. Forms are defined following a schema written in JSON. OHRI forms are leveraging the [AMPATH Forms schema](https://ampath-forms.vercel.app/core-concepts) with a few custom extensions. Below is a snippet of a basic form structure:
+
+```json copy
+{
+  "name": "Hello world form",
+  "pages": [],
+  "uuid": "ff0933fb-20bd-4e44-a3e8-4073e9801ceb",
+  "encounterType": "d105cbc3-728d-4d11-9ed3-637bf1a4e8a6",
+  "availableIntents": []
+}
+```
+
+Form schemas get constructed using the [AMPATH form builder](https://ampath-forms.vercel.app/getting-started#create-a-form).
+
+## Form properties
+
+The schema comprises of the following properties:
+
+| Element            |                 Type                 |                                                    Description |
+| :----------------- | :----------------------------------: | -------------------------------------------------------------: |
+| `name`             |                string                |                                           The name of the form |
+| `uuid`             |                string                |                                     The unique form identifier |
+| `encounterType`    |                string                | The encounter type `uuid` associated with the form’s encounter |
+| `inlineRendering`  | single-line / multi-line / automatic |                                      The inline rendering mode |
+| `pages`            |           Array\<Section\>           |                     A collection of pages that makeup the form |
+| `availableIntents` |           Array\<Intent\>            |                       A list of intents supported by this form |

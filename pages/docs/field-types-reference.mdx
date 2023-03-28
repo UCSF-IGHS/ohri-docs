@@ -1,0 +1,475 @@
+# Field Types
+
+OHRI Forms has committed to the schema used by the AMPATH Forms, and as such, there is a high level of compatibility. OHRI Forms supports almost all the field types from AMPATH’s schema with a few extensions. The most commonly used fields include `text`, `textarea`, `number`, `date` and `select`.
+
+Field types are defined in the questionOptions definition of a question using the following syntax:
+
+```jsx copy
+{
+  "questionOptions": {
+    "rendering": "" // field type goes here
+  }
+}
+```
+
+## text
+
+Renders a text input.
+
+```jsx copy
+{
+  "label":"What Identification Number was issued to the client?",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"text",
+    "concept":"162576AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  },
+  "id":"patientIdentificationNumber"
+}
+```
+
+Renders:
+
+![Text field](/text.png)
+
+## number
+
+Renders a number input
+
+```jsx copy
+{
+  "label":"Number of pregnancies delivered (parity)",
+  "type":"obs",
+  "id":"noDelivery",
+  "questionOptions":{
+    "concept":"a899a920-1350-11df-a1f1-0026b9348838",
+    "rendering":"number"
+  },
+  "validators":[
+
+  ]
+}
+```
+
+Renders:
+
+![Number field](/number.png)
+
+## select
+
+Renders as a dropdown list
+
+```jsx copy
+{
+  "label":"What is the reason for conducting the HIV test?",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"select",
+    "concept":"ce3816e7-082d-496b-890b-a2b169922c22",
+    "answers":[
+      {
+        "concept":"7398c91a-8db8-480d-8130-1a92cc208ded",
+        "label":"Inconclusive HIV Result"
+      },
+      {
+        "concept":"a6ad599d-2bc4-47b7-81fe-a38e88867c1d",
+        "label":"Self Initiative"
+      },
+      {
+        "concept":"0e65e5fd-a1d8-4730-a991-75a1d703cba6",
+        "label":"HIV Self Test Positive"
+      },
+      {
+        "concept":"6e768c50-a239-45ff-9920-2c6a9352320e",
+        "label":"Index Client Testing"
+      },
+      {
+        "concept":"cb099534-b609-4561-9d4c-dd2fc74cedaf",
+        "label":"Assisted Partner Notification (APN)"
+      },
+      {
+        "concept":"5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label":"Other"
+      }
+    ]
+  },
+  "id":"reasonForTesting"
+}
+```
+
+Renders:
+
+![Select field](/select.png)
+
+## date
+
+Renders as date input. When clicked, the input reveals a date picker with current date as the default value.
+
+```jsx copy
+{
+  "label":"When was the HIV test conducted?",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"date",
+    "concept":"164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "weeksList":""
+  },
+  "validators":[
+    {
+      "type":"date",
+      "allowFutureDates":"false"
+    },
+    {
+      "type":"js_expression",
+      "failsWhenExpression":"myValue < '1/1/1980'"
+    }
+  ],
+  "id":"dateTestPerformed"
+}
+```
+
+Renders:
+
+![Date field](/date.png)
+
+## datetime
+
+Renders the date input with a time picker beside it. When clicked, the input will reveal a time picker with the current time as the default value. The time picker is disabled only until a date is provided
+
+```jsx copy
+{
+  "label": "Order date",
+  "type": "obs",
+  "questionOptions": {
+    "rendering": "datetime",
+    "concept": "162078AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "weeksList": "",
+    "conceptMappings": [
+      {
+        "type": "CIEL",
+        "value": "162078"
+      }
+    ]
+  },
+  "id": "orderDate"
+}
+```
+
+Renders:
+
+![Datetime field](/datetime-select.png)
+
+## checkbox
+
+Renders like a multi-choice select field. This kind of field lets you select more that one option.
+
+```jsx copy
+{
+  "label":"Is the client experiencing any of the following TB symptoms?",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"checkbox",
+    "concept":"159800AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "answers":[
+      {
+        "concept":"1494AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label":"Fever lasting more than 3 weeks"
+      },
+      {
+        "concept":"159799AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label":"Cough lasting more than 2 weeks"
+      },
+      {
+        "concept":"138905AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label":"Hemoptysis"
+      },
+      {
+        "concept":"133027AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label":"Night sweats"
+      }
+    ]
+  },
+  "id":"tbSymptoms"
+}
+```
+
+Renders:
+
+![Checkbox field](/checkbox.png)
+
+## textarea
+
+Renders a textarea input. By default, the textarea will be 4 rows tall. You can configure the number of visible text lines for the input by providing a number to the rows property in your questionOptions definition.
+
+```jsx copy
+{
+  "label":"Notes",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"textarea",
+    "concept":"161011AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "rows":"5"
+  },
+  "id":"notes"
+}
+```
+
+Renders:
+
+![Textarea field](/textarea.png)
+
+## radio
+
+Renders a radio input. A radio input allows users to select an option from a list. All options are displayed at the same time and only one option from the available choices can be selected.
+
+```jsx copy
+{
+  "label":"Has the client ever been tested for HIV?",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"radio",
+    "concept":"1492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "answers":[
+      {
+        "label":"Yes",
+        "concept":"cf82933b-3f3f-45e7-a5ab-5d31aaee3da3"
+      },
+      {
+        "label":"No",
+        "concept":"488b58ff-64f5-4f8a-8979-fa79940b1594"
+      },
+      {
+        "concept":"1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label":"Unknown"
+      }
+    ]
+  },
+  "id":"everTestedForHIV"
+}
+```
+
+Renders:
+
+![Radio field](/radio.png)
+
+## toggle
+
+Renders a toggle input. This type of control is suitable for collecting boolean values. By default, it’s set to false
+
+```jsx copy
+{
+  "label":"Was consent provided?",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"toggle",
+    "concept":"976ca997-fb2b-4bef-a299-f7c9e16b50a8",
+    "toggleOptions":{
+      "labelTrue":"Yes",
+      "labelFalse":"No"
+    },
+    "conceptMappings":[
+
+    ],
+    "answers":[
+      {
+        "label":"Yes",
+        "concept":"cf82933b-3f3f-45e7-a5ab-5d31aaee3da3"
+      },
+      {
+        "label":"No",
+        "concept":"488b58ff-64f5-4f8a-8979-fa79940b1594"
+      }
+    ]
+  },
+  "id":"recencyTestingConsent"
+}
+```
+
+Renders:
+
+![Toggle field](/toggle.png)
+
+## content-switcher
+
+This is a custom single select control from Carbon.
+
+```jsx copy
+{
+  "label":"Has the client ever been tested for HIV?",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"content-switcher",
+    "concept":"1492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "answers":[
+      {
+        "label":"Yes",
+        "concept":"cf82933b-3f3f-45e7-a5ab-5d31aaee3da3"
+      },
+      {
+        "label":"No",
+        "concept":"488b58ff-64f5-4f8a-8979-fa79940b1594"
+      },
+      {
+        "concept":"1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label":"Unknown"
+      }
+    ]
+  },
+  "id":"everTestedForHIV"
+}
+```
+
+Renders:
+
+![Content switcher field](/content-switcher.png)
+
+## fixed-value
+
+Think of this as a hidden HTML input. In some cases, a form needs to a persist a predefined non-mutable value on submission.
+
+This happens for example on instances where multiple forms operate on the same encounter, and where the status of that encounter changes based on the form submitted — for example a lab encounter. A lab request form would set its status to Pending, and when a result comes in, the status becomes Complete.
+
+```jsx copy
+{
+  "label":"Status",
+  "type":"obs",
+  "questionOptions":{
+    "rendering":"fixed-value",
+    "concept":"6681366c-2174-489a-b951-13a1404935bf",
+    "answers":[
+      {
+        "concept":"162866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "label":"Pending status"
+      },
+      // ...
+    ]
+  },
+  "id":"status",
+  "behaviours":[
+    {
+      "intent":"*",
+      "hide":{
+        "hideWhenExpression":"false"
+      },
+      "value":"162866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    },
+    {
+      "intent":"COVID_LAB_ORDER_EMBED",
+      "hide":{
+        "hideWhenExpression":"true"
+      }
+    }
+  ]
+}
+```
+
+The value is driven by form behaviour which is defined by user intent. The default (\*) behaviour sets the value to 162866AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA (Pending status). When this form is loaded with the COVID_LAB_ORDER_EMBED intent, no observation will be created because the field is evaluated as isHidden.
+
+## group
+
+Used to create an obsGroup. This is used when
+you need to link multiple questions together.
+
+```jsx copy
+{
+  "label":"Test Obs group",
+  "type":"obsGroup",
+  "questionOptions":{
+    "rendering":"group",
+    "concept":"8acba1d1-67cc-422c-961e-86d6b47bc45b"
+  },
+  "id":"testObsGroup",
+  "questions":[
+    {
+      "label":"Patient Identification Number",
+      "type":"obs",
+      "questionOptions":{
+        "rendering":"text",
+        "concept":"d3205b6a-7192-461f-9ea8-a1ac8af38964"
+      },
+      "id":"patientClinicIdentificationNumberGroup"
+    },
+    {
+      "label":"Was client linked to care?",
+      "type":"obs",
+      "questionOptions":{
+        "rendering":"select",
+        "concept":"e8e8fe71-adbb-48e7-b531-589985094d30",
+        "answers":[
+          {
+            "concept":"cf82933b-3f3f-45e7-a5ab-5d31aaee3da3",
+            "label":"Yes"
+          },
+          {
+            "concept":"488b58ff-64f5-4f8a-8979-fa79940b1594",
+            "label":"No"
+          },
+          {
+            "concept":"1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "label":"Unknown"
+          }
+        ]
+      },
+      "id":"linkedToCareGroup"
+    }
+  ]
+}
+```
+
+Renders:
+
+![Group field](/group.png)
+
+## repeating
+
+Renders a repeating group field.
+
+```jsx copy
+{
+  "label":"Test Obs group",
+  "type":"obsGroup",
+  "questionOptions":{
+    "rendering":"repeating",
+    "concept":"8acba1d1-67cc-422c-961e-86d6b47bc45b"
+  },
+  "id":"testObsGroup",
+  "questions":[
+    {
+      "label":"Patient Identification Number",
+      "type":"obs",
+      "questionOptions":{
+        "rendering":"text",
+        "concept":"d3205b6a-7192-461f-9ea8-a1ac8af38964"
+      },
+      "id":"patientClinicIdentificationNumberGroup"
+    },
+    {
+      "label":"Was client linked to care?",
+      "type":"obs",
+      "questionOptions":{
+        "rendering":"select",
+        "concept":"e8e8fe71-adbb-48e7-b531-589985094d30",
+        "answers":[
+          {
+            "concept":"cf82933b-3f3f-45e7-a5ab-5d31aaee3da3",
+            "label":"Yes"
+          },
+          {
+            "concept":"488b58ff-64f5-4f8a-8979-fa79940b1594",
+            "label":"No"
+          },
+          {
+            "concept":"1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "label":"Unknown"
+          }
+        ]
+      },
+      "id":"linkedToCareGroup"
+    }
+  ]
+}
+```
+
+Renders:
+
+![Repeating field](/repeating.png)

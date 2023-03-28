@@ -1,0 +1,30 @@
+# Subforms
+
+Forms can be broken up into smaller, distinct units that can be reused within other forms and even programme areas. Subforms also enable mixing encounter types. For example, the parent form can post to an Assessment encounter type, but an embedded form for lab requests can post to a Lab test encounter type, while providing a single user experience. Subforms can be defined through pages, this gives us the flexibility of arbitrary positioning subforms anywhere within the parent form.
+
+```json copy
+{
+  "pages": [
+      {
+        "label": "Lab Order",
+        "isSubform": "true",
+        "subform": {
+          "name": "covid_lab_order",
+          "package": "covid",
+          "behaviours": [
+            {
+              "intent": "*",
+              "subform_intent": "COVID_LAB_ORDER_EMBED",
+              "readonly": "true"
+            }
+          ]
+        }
+      },
+      ...
+  ]
+}
+```
+
+The `isSubform` attribute explicitly tells the engine that this page is a subform. The `subform` property is a manifestation of the embedded form, it defines meta properties of the subform like the subform target intent, parent behaviour override(s) like the `readonly` behaviour and form namespace.
+
+A page is used when defining a collection of related sections while a `subform` is used when embedding different `form` to the current form.

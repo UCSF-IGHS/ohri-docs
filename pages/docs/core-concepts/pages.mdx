@@ -1,0 +1,159 @@
+# Pages
+
+A page is a collection of related sections. A typical page definition consists of a `label`, `inlineRendering` (optional) and a list of `section`said. The engine uses the page’s label to identify it from other pages; that being said, it’s mandatory to keep the page’s label unique. Below is an example of a form with one `page` and `section`. The `section` has 4 questions labelled:
+
+```json copy
+{
+  "name": "HTS Retrospective Form",
+  "pages": [
+    {
+      "label": "Eligibility Screening",
+      "sections": [
+        {
+          "label": "Testing history",
+          "isExpanded": "true",
+          "questions": [
+            {
+              "label": "What is the reason for conducting the HIV test?",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "ce3816e7-082d-496b-890b-a2b169922c22",
+                "answers": [
+                  {
+                    "concept": "7398c91a-8db8-480d-8130-1a92cc208ded",
+                    "label": "Inconclusive HIV Result",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "a6ad599d-2bc4-47b7-81fe-a38e88867c1d",
+                    "label": "Self Initiative",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "0e65e5fd-a1d8-4730-a991-75a1d703cba6",
+                    "label": "HIV Self Test Positive",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "6e768c50-a239-45ff-9920-2c6a9352320e",
+                    "label": "Index Client Testing",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "cb099534-b609-4561-9d4c-dd2fc74cedaf",
+                    "label": "Assisted Partner Notification (APN)",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Other"
+                  }
+                ]
+              },
+              "id": "reasonForTesting"
+            },
+            {
+              "label": "Has the client ever been tested for HIV?",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "1492AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "answers": [
+                  {
+                    "label": "Yes",
+                    "concept": "cf82933b-3f3f-45e7-a5ab-5d31aaee3da3"
+                  },
+                  {
+                    "label": "No",
+                    "concept": "488b58ff-64f5-4f8a-8979-fa79940b1594"
+                  },
+                  {
+                    "concept": "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Unknown"
+                  }
+                ]
+              },
+              "id": "everTestedForHIV"
+            },
+            {
+              "label": "How recently has the client been tested for HIV within any of the following periods?",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "e7947a45-acff-49e1-ba1c-33e43a710e0d",
+                "answers": [
+                  {
+                    "concept": "909edba5-c9b1-44e3-92ee-f95269964fe1",
+                    "label": "0-3 Months",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "8df190d5-7a65-4b53-9b4a-b35b9cf400b1",
+                    "label": "3-6 Months",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "c85e6df3-7184-400e-a686-f41aaae08113",
+                    "label": "6-12 Months",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "8de5bf3f-8058-4735-ae50-b5a986b2362b",
+                    "label": "More Than 12 Months",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Unknown"
+                  }
+                ]
+              },
+              "id": "durationSinceLastHIVTest"
+            },
+            {
+              "label": "What was the result of the last HIV test?",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "159427AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "answers": [
+                  {
+                    "concept": "6378487b-584d-4422-a6a6-56c8830873ff",
+                    "label": "Positive",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Negative"
+                  },
+                  {
+                    "concept": "7398c91a-8db8-480d-8130-1a92cc208ded",
+                    "label": "Inconclusive",
+                    "conceptMappings": []
+                  },
+                  {
+                    "concept": "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Unknown"
+                  }
+                ]
+              },
+              "id": "lastHIVTestResult"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "uuid": "xxxx",
+  "encounterType": "79c1f50f-f77d-42e2-ad2a-d29304dde2fe"
+}
+```
+
+Here's how this page definition gets rendered:
+
+![Single-page form layout](/single-page-layout.png)
+
+In practice, your form will likely have more than one page. You can cycle through the pages by infinitely scrolling or selecting the desired page from the left sidebar. Here's how a form with multiple pages would look like:
+
+![Multiple-page form layout](/multi-page-layout.png)

@@ -1,0 +1,65 @@
+# Expression Helpers Reference
+
+OHRI forms provides a number expression helper functions that are useful for evaluating more complex expressions.
+
+## isEmpty
+
+Determines whether a value is nullish or a blank string or an empty array.
+
+```json copy
+{
+  "failsWhenExpression": "!isEmpty(myValue) && isEmpty(`referredToPreventionServices`)"
+}
+```
+
+NB: `myValue` is a runtime variable that resolves to the current field’s value.
+
+## today
+
+Returns now or today's date.
+
+```json copy
+{
+  "failsWhenExpression": "myValue > today()"
+}
+```
+
+## includes
+
+Determines whether an array of items includes a given value.
+
+`includes(questionId: string, value: any)`
+
+Example usage:
+
+```json copy
+{
+  "failsWhenExpression": "!includes('reasonsForCovidTest','5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+}
+```
+
+## isDateBefore
+
+Date comparator.
+
+`isDateBefore(left: Date, right: Date | string, format?: string)`
+
+Determines whether left date value is before right date value. Optionally accepts a custom date format for date string values. If not provided, YYYY-MM-DD will be used.
+
+Example usage:
+
+```json copy
+{
+  "failsWhenExpression": "isDateBefore(myValue, '2020-12-01')"
+}
+```
+
+## useFieldValue
+
+Returns a field value by field ID.
+
+```json copy
+{
+  "failsWhenExpression": "isDateBefore(myValue,'2020-01-01') || myValue <= useFieldValue('vaccinationDate')"
+}
+```

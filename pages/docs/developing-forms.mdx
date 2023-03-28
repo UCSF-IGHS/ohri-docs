@@ -1,0 +1,87 @@
+# Form Development in OHRI
+
+While developing forms in OHRI, we use JSON to accomplish this. JSON is "self-describing" and easy to understand. Here, we shall look at the basic JSON syntax, their meanings and use case and a detail of the validations we add to OHRI forms to improve form behaviour.
+
+## Syntax expressions used in form schemas
+
+1. `!==` (Not equal to a certain value i.e. not the same as) Here the ! before any expression would declare the next expression as a not e.g. "include" would mean include this and that but when we do it as "!include" would mean not include or say do not include
+
+2. `===` (Is equal to a certain value i.e. same as)
+
+3. `||` (This means 'or' i.e. as well as)
+
+4. `>` (Is greater than)
+
+5. `<` (Is less than)
+
+6. `>=` (Is greater than or equal to)
+
+7. `<=` (Is less than or Equal to)
+
+8. `&&` (AND)
+
+## Expressions
+
+Expressions are used to add validations and behaviours to OHRI forms. We have two expressions while adding validations to questions/fields in OHRI forms i.e. `hideWhenExpression` is used to hide questions/fields and the `failsWhenExpression` added as part of the form validators for any questions that should throw an error within the form to avoid it from saving if the expressions are not met rightly usually used for dates.
+
+## Key points
+
+- `hideWhenExpression` is used to hide questions based on the desired behaviour to be implemented and used within the hide parameters.
+
+  ```json copy
+  "hide": {
+    "hideWhenExpression": "vaccineDose == null""
+  }
+  ```
+
+- `failsWhenExpression` will throw an error on the form and fail it from saving and is used within the validators parameters.
+
+  ```json copy
+  "validators": [
+    {
+      "type": "js_expression",
+        "failsWhenExpression": "isDateBefore(myValue,'2020-01-01') || myValue <= useFieldValue('vaccinationDate')"
+    }
+  ]
+  ```
+
+- While adding concepts instead of question ids, they should be within single quotes. This is a requirement for any referred data value in JSON.
+- So as to complete the form for it to be able to save after adding validations and behaviours, we shall need to add the encounterType that is created from the backend at the end of the form as below:
+
+  ```json
+    "processor": "EncounterFormProcessor",
+    "uuid": "xxxx",
+    "referencedForms": [],
+    "encounterType": "5b37ce7a-c55e-4226-bdc8-5af04025a6de",
+    "allowUnspecifiedAll": true
+  ```
+
+Below are selected scenarios to give a gist of how behaviours are used in OHRI forms and can be used as a guide to achieve desired behaviours for specific questions within the said forms.
+
+1. `isDateBefore(myValue, '1980-01-01')` - This is used in a `failsWhenExpression` and would mean that if the date is before the value 1980-01-01, what ever question behaviour this expression is on should throw and error and not save. (`isDateBefore` is a REACT method and so can be used anywhere and everywhere in any form JSON while declaring this kind of validation)
+
+2. `myValue > today()` - This expression would imply that the expression should fail if at all the question date value is greater than today/current date (This also works for concepts or question ids and not only for date fields). For more context let us use this expression in this way:
+
+   ```js
+   myValue <= "1/1/2020";
+   ```
+
+This expression should fail if at all the date is less than or equal to "1/1/2020".
+
+3. `isEmpty(testingLocation)` - `isEmpty` is a REACT method that is used to check if a question is empty or values weren’t selected. This hideWhenExpression then would imply that the question with this behaviour in it should not open/display if at all the question with id `testingLocation` is empty or if no value was selected in it. We can also express this behaviour like below:
+
+   ```js
+   testingLocation == "5995ebd5-11ae-47ca-ac12-bcb8c0117aec";
+   ```
+
+   Meaning that the question should not open if at all the question with id `testingLocation` doesn't have the value with concept `5995ebd5-11ae-47ca-ac12-bcb8c0117aec` selected.
+
+4. `!includes('vaccineAdministered','5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')` - `!includes` as well is a REACT method that takes care of the logic of “if a question does not include”. Therefore, for this scenario if the question with id `vaccineAdministered` doesn't include a selected value with concept `5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`, it should hide the field in which this hideWhenExpression behaviour is.
+
+5. `vaccineDose == null` - This means if a question with id `vaccineDose` has no values selected/is NULL, the current question in which this hideWhenExpression is should be hidden or not displayed. Instead of Null we can also put in a concept pointing to a given field e.g.
+
+   ```js
+   vaccineDose == "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+   ```
+
+6. `myValue <= useFieldValue('vaccinationDate')` - `useFieldValue` is a REACT method that uses a specified field value for the id provided to a given question. For this `failsWhenExpression` then means that the current question should fail or throw and error if the value is less than or equal to the value added by the user in the UI for the question with id vaccinationDate i.e. if the user entered the date ‘2021-03-09' for the vaccination Date question, the question in which this validator is should throw an error and fail to save if at all the date value of said question is less than or equal to '2021-03-09’.
