@@ -49,6 +49,9 @@ const themeConfig = {
       <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
     </>
   ),
+  project: {
+    link: "https://github.com/UCSF-IGHS/ohri-docs"
+  },
   footer: {
     text: <span>© {new Date().getFullYear()} UCSF</span>,
   },
