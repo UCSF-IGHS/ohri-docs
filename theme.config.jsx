@@ -55,6 +55,7 @@ const themeConfig = {
   footer: {
     text: <span>© {new Date().getFullYear()} UCSF</span>,
   },
+  darkMode: false,
 };
 
 export default themeConfig;
