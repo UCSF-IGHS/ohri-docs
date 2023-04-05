@@ -1,0 +1,80 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Running the Form Engine against an OpenMRS 3.x frontend
+
+Presently, [OpenMRS 3.x](https://dev3.openmrs.org/openmrs) (O3) ships the [OHRI form engine](https://github.com/openmrs/openmrs-form-engine-lib).
+
+This version leverages [React](https://react.dev/) and [Carbon design system](https://carbondesignsystem.com/) to get its look and feel to match that of O3.
+
+If you wish to modify the Form Engine and test it within O3 (or any other O3-based frontends), follow the steps outlined below:
+
+## Prerequisites
+
+You need to have [yarn](https://yarnpkg.com) installed on your system. You can check for whether yarn is installed by running:
+
+```sh
+  yarn -v
+```
+
+If this doesn't return a version number, you likely don't have it installed. To install it on your system, run:
+
+```sh
+npm install -g yarn
+```
+
+Additionally, the [openmrs-esm-patient-chart](https://github.com/openmrs/openmrs-esm-patient-chart) repository expects you to have `Node.js v16.x.x` or higher installed on your system.
+
+## Steps
+
+- Fork and clone the [OHRI forme ngine](https://github.com/openmrs/openmrs-form-engine-lib) repository.
+- `cd` into your clone.
+- `pwd` to get the path of the OHRI form engine , which you will use later. You should see something like
+  ```
+    /Users/johndoe/code/openmrs-form-engine-lib
+  ```
+- The engine is a library and not an O3 MF module. It can be consumed by bundling it within an ESM or custom frontend app that incorporates it within a UI workflow.
+
+- You can make changes to the library and test them on forms in the O3 patient chart.
+
+- Open your local `openmrs-esm-patient-chart` clone. Install dependencies using:
+
+  ```sh
+  yarn
+  ```
+
+- We'll then link the `openmrs-form-engine-lib` from the previous step inside of `packages/esm-form-engine-app`. To do so, run:
+
+  ```sh
+  cd packages/esm-form-engine-app
+  yarn link ...
+
+  # where ... is the path to your `openmrs-form-engine-lib` directory from the previous step. It could look like: /Users/johndoe/code/openmrs-form-engine-lib.
+  ```
+
+  <Callout emoji="ℹ️" type="info">
+    If you're using Windows, you might need to wrap your path in double quotes.
+  </Callout>
+
+  It is very important that this step works correctly to establish the link between the formengine library and the frontend.
+
+  Open the package.json file in the `esm-patient-chart-app` and confirm that in the resolutions section, you have something like
+  ```
+  "resolutions": {
+    "@openmrs/openmrs-form-engine-lib": "portal:/Users/johndoe/code/openmrs-form-engine-lib"
+  }
+  ```
+
+- Next, `cd` into the `openmrs-esm-patient-chart` root directory and spin up your local copy of the formengine by running:
+
+  ```sh
+     yarn start --sources packages/esm-form-engine-app  --port 8090 --importmap https://dev3.openmrs.org/openmrs/spa/importmap.json
+  ```
+
+- Next, log into your 3.x frontend (could be `AMPATH 3.x`, `KenyaEMR 3.x`, or a community server like `dev3`) in your browser.
+
+- Congratulations! You should now be running the local version of the formegine in your application.
+
+- To test, search for a patient and open their chart. Find the forms widget and launch a clinical form in the workspace.
+
+- Any changes made to the formengine app should propagate into the form displayed in the workspace.
+
