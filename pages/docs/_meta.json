@@ -6,5 +6,6 @@
   "validation": "Field Validation",
   "developing-forms": "Form Development in OHRI",
   "technical-implementation": "Technical Implementation",
-  "comparison-with-ampath-forms": "Supported AMPATH Forms Features"
+  "comparison-with-ampath-forms": "Supported AMPATH Forms Features",
+  "developer-guide": "Developer Guide"
 }
