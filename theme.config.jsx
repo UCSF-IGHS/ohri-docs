@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 const themeConfig = {
+  docsRepositoryBase: "https://github.com/UCSF-IGHS/ohri-docs/tree/main",
   useNextSeoProps() {
     return {
       titleTemplate: "%s – OHRI Forms",
@@ -50,7 +51,7 @@ const themeConfig = {
     </>
   ),
   project: {
-    link: "https://github.com/UCSF-IGHS/ohri-docs"
+    link: "https://github.com/UCSF-IGHS/ohri-docs",
   },
   footer: {
     text: <span>© {new Date().getFullYear()} UCSF</span>,
