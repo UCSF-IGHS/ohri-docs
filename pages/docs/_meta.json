@@ -4,6 +4,7 @@
   "field-types-reference": "Field Types Reference",
   "expression-helpers": "Expression Helpers Reference",
   "validation": "Field Validation",
+  "conditional-rendering": "Hiding Fields",
   "developing-forms": "Form Development in OHRI",
   "technical-implementation": "Technical Implementation",
   "comparison-with-ampath-forms": "Supported AMPATH Forms Features",
