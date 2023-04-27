@@ -58,8 +58,168 @@ Example usage:
 
 Returns a field value by field ID.
 
+Example usage:
+
 ```json copy
 {
   "failsWhenExpression": "isDateBefore(myValue,'2020-01-01') || myValue <= useFieldValue('vaccinationDate')"
 }
 ```
+
+## calcBMI
+
+Takes the height and weight field values and returns the BMI (Body Mass Index) value
+
+Example usage:
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcBMI('height','weight')"
+  }
+}
+```
+
+## calcEDD
+
+Takes the last menstruation date value and returns the expected date of delivery (EDD)
+
+Example usage:
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcEDD('LMP')"
+  }
+}
+```
+
+## calcBSA
+
+Takes the height and weight field values and returns the BSA (Body Surface Area) value
+
+Example usage:
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcBSA('height','weight')"
+  }
+}
+```
+
+## arrayContains
+
+Takes in values in an array and returns true if the values are contained in the source array
+
+Example usage:
+
+```json copy
+{
+  "hide": {
+    "hideWhenExpression": "!arrayContains(referralReason,'5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')"
+  }
+}
+```
+This evaluation means that the question will be hidden if the Specify other reason is not selected amongst the answers to the preceding question.
+
+## arrayContainsAny
+
+Tests whether the source array contains members (or the values contained in members if it is an Array). Returns true if members is/are in array, and false otherwise.
+
+`arrayContainsAny(array, members)`
+
+## calcMonthsOnART 
+
+Takes in the art start date and retuns the months the patient has been on art
+
+Example usage:
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcMonthsOnART('artStartDate')"
+  }
+}
+```
+
+## calcAgeBasedOnDate
+
+Takes in the birth date and returns a patients age
+
+Example usage:
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcAgeBasedOnDate('dateValue')"
+  }
+}
+```
+
+## formatDate
+
+`formatDate(value, format, offset)`
+
+Takes in a date value, preferred format and offset value and returns the preferred date format
+
+## calcGravida
+
+Takes in the parity term and parity aborting numerical values and returns the patients gravida
+
+Example usage:
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcGravida('parityTerm', 'parityAbortion')"
+  }
+}
+```
+
+## calcTimeDifference
+
+Takes in a date and returns the difference in days, weeks, months or years from the current date
+
+Example usage:
+
+Time difference in days :
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcTimeDifference('dateValue', 'd')"
+  }
+}
+```
+
+Time difference in weeks :
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcTimeDifference('dateValue', 'w')"
+  }
+}
+```
+
+Time difference in months :
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcTimeDifference('dateValue', 'm')"
+  }
+}
+```
+
+Time difference in years :
+
+```json copy
+{
+  "calculate": {
+    "calculateExpression": "calcTimeDifference('dateValue', 'y')"
+  }
+}
+```
+
