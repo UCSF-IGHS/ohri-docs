@@ -1,0 +1,64 @@
+# Rendering Fields Conditionally
+
+You can render Form fields conditionally by defining a `hideWhenExpression` inside the `hide` property of your question definitions.
+
+A `hideWhenExpression` is a JavaScript expression that returns a boolean value (`true` or `false`). [Logical operators](https://javascript.info/logical-operators) are used to construct these expressions. Additionally, you can incorporate injected data sources and expression helper functions into your expression definitions.
+
+To write a `hideWhenExpression`, include a code block like this within the `questions` array of your
+[question](/docs/core-concepts/questions) definition:
+
+```json copy
+{
+  label: 'When was the HIV test conducted?',
+  type: 'obs',
+  questionOptions: {
+    rendering: 'date',
+    concept: '164400AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+    weeksList: '',
+  },
+  required: 'true',
+  unspecified: 'true',
+  "hide": {
+    "hideWhenExpression": "isEmpty(onArt) || onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+  }
+}
+```
+
+In the example above, the logic provided instructs the Form Builder to hide (not render) the question with the `onArt` id if the value of its backing concept does not match the supplied value.
+
+## More examples
+
+#### 1. Using the `isEmpty` helper
+
+```json copy
+{
+  "hide": {
+    "hideWhenExpression": "isEmpty(screenedForHepatitisB) || screenedForHepatitisB === '1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'"
+  }
+}
+```
+
+In this example, the question being validated gets hidden if the question with the id `screenedForHepatitisB` is empty or if its value is the answer backed by the concept ID `1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA`. Most often, if your `hideWhenExpression` is not working, it's likely because you did not use the [isEmpty](/docs/expression-helpers#isempty) helper as shown above.
+
+#### 2. Using the `sex` model from a `patient` data source
+
+```json copy
+{
+  "hide": {
+    "hideWhenExpression": "sex !== 'F'"
+  }
+}
+```
+
+In this example, the question being validated gets hidden if the patient's sex is F. For this expression to work, you would need to plug in a patient object that exposes a gender property mapped to either `F` (for female) or `M` (for male).
+#### 3. Using the `age` model from a `patient` data source
+
+```json copy
+{
+  "hide": {
+    "hideWhenExpression": "!age >= 18"
+  }
+}
+```
+
+In this example, the question being validated gets hidden if the patient's age is greater than or equal to 18. For this expression to work, you would need to plug in a patient object that exposes an age value
