@@ -136,3 +136,29 @@ The expression evaluates two conditions:
 1. That this question(id: `currentlyOnArt`) gets answered. `isEmpty(myValue)` returns `true` if this question does not get answered, and false otherwise.
 
 2. That question with `hivStatus` has the answer with the value `a896f3a6-1350-11df-a1f1-0026b9348838`. This value corresponds to the coded answer labelled `HIV Positive`.
+
+The validation below restricts a user to only enter numbers only and while specifying the number of characters that can be entered. This works for fields like picking CCC numbers/Phone numbers.
+
+```json copy
+{
+	"label": "CCC Number",
+	"type": "obs",
+	"id": "cccNumber",
+	"questionOptions": {
+	      "concept": "162053AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+				"rendering": "text",
+				"maxLength": "10",
+				"minLength": "10"
+							},
+							"validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "!/^[0-9]*$/.test(myValue)",
+                      "message": "CCC Number Should Be 10 Digits"
+                    }
+							  ]
+}
+```
+The JavaScript expressions displays a fail message whenever a user tries to enter special characters or alphanumericals
+
+## The above Validation enforces numbers by use of JavaScript expressions
