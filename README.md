@@ -19,6 +19,4 @@ To start the dev server run:
 yarn dev
 ```
 
-The documentation website for the OHRI Form Engne https://ohri-docs.globalhealthapp.net.
-
-Built using [Nextra](https://github.com/shuding/nextra) and powered by [Next.js](https://github.com/vercel/next.js).
+The documentation website for the React Form Engne https://ohri-docs.globalhealthapp.net.
