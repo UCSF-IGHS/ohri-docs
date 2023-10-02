@@ -1,6 +1,6 @@
 # O3 Docs
 
-This documentation is intended to enable users to utilize the features of the OHRI form engine .
+This documentation is intended to enable users to utilize the features of the React Form Engine (RFE).
 
 Local Development
 
