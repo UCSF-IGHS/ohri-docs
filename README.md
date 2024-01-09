@@ -1,22 +1,17 @@
-# O3 Docs
+# React Form Engine and OHRI Docs
 
-This documentation is intended to enable users to utilize the features of the React Form Engine (RFE).
+This documentation is intended to enable users to utilize the features of the React Form Engine (RFE) as well as OHRI associated packages.
 
 Local Development
 
 To install the dependancies run:
 ```bash
-yarn
+pnpm install
 ```
 
-To build the project run:
+To start the dev server on port 3000 run:
 ```bash
-yarn build
-```
-
-To start the dev server run:
-```bash
-yarn dev
+pnpm run dev
 ```
 
 The documentation website for the React Form Engne https://ohri-docs.globalhealthapp.net.

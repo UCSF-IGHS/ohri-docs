@@ -1,9 +1,22 @@
 {
+  "name": "@ohri/docs",
+  "version": "0.1.0",
+  "description": "Documentation for React Form Engine for O3 and OHRI packages.",
+  "author": "UCSF-IGHS",
+  "license": "MPL-2.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UCSF-IGHS/ohri-docs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/UCSF-IGHS/ohri-docs/issues"
+  },
+  "homepage": "https://ohri-docs.globalhealthapp.net/",
   "dependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "^10.4.14",
