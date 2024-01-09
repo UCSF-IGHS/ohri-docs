@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  flexsearch: 0.7.31
+
 dependencies:
   '@tailwindcss/typography':
     specifier: ^0.5.9
@@ -1330,8 +1333,8 @@ packages:
       to-regex-range: 5.0.1
     dev: false
 
-  /flexsearch@0.7.41:
-    resolution: {integrity: sha512-nlSsN+cLeoOMEPivjjMuYdMN7WdCKaogCirVZNxQ8a34reoKZvxDxbAtIoAK1ewmkXd5dz8Pb2kwwYJ6b/07PQ==}
+  /flexsearch@0.7.31:
+    resolution: {integrity: sha512-XGozTsMPYkm+6b5QL3Z9wQcJjNYxp0CYn3U1gO7dwD6PAqU1SVWZxI9CCg3z+ml3YfqdPnrBehaBrnH2AGKbNA==}
     dev: false
 
   /focus-visible@5.2.0:
@@ -2580,7 +2583,7 @@ packages:
       '@popperjs/core': 2.11.8
       clsx: 2.1.0
       escape-string-regexp: 5.0.0
-      flexsearch: 0.7.41
+      flexsearch: 0.7.31
       focus-visible: 5.2.0
       git-url-parse: 13.1.1
       intersection-observer: 0.12.2
