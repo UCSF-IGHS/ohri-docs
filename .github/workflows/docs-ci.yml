@@ -47,21 +47,44 @@ jobs:
       - name: Run build
         run: pnpm build
 
-  docs_deployment:
+  update_config:
     runs-on: ubuntu-latest
-
     needs: build
-
-    if: ${{ github.ref == 'refs/heads/dev' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
 
     steps:
-      # Update the Microfrontends to reflect what we have in the Working branch
+      - name: Checkout repo to make config folder local
+        uses: actions/checkout@v3
+        with:
+          ref: main
+      - run: ls -la .github/
+
+      - name: Copy Branch main Import Map to remote
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          source: .github/deploy_docs.sh
+          target: /usr/share/tomcat/microfrontends/ohri-docs
+          host: ${{ secrets.HISTAC_HOST }}
+          username: ${{ secrets.HISTAC_USERNAME }}
+          key: ${{ secrets.HISTAC_OHRI_KEY}}
+          port: ${{ secrets.HISTAC_PORT }}
+
+  docs_deployment:
+    runs-on: ubuntu-latest
+    needs: update_config
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    steps:
+      # Update the Microfrontends to reflect what we have in the working branch
+      - name: Compute Timestamp
+        run: echo "TIMESTAMP=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
       - uses: garygrossgarten/github-action-ssh@release
         name: BackUp and Run the Update DOCS Site Script
         with:
-          command: cd /usr/share/tomcat/microfrontends/
-            sh deploy-ohri-docs.sh
+          command: cd /usr/share/tomcat/microfrontends/ohri-docs/.github && sh deploy_docs.sh
           host: ${{ secrets.HISTAC_HOST }}
-          username: ${{ secrets.HISTAC_USERNAME }}
-          privateKey: ${{ secrets.HISTAC_KEY}}
+          username: ${{ secrets.OHRI_DOCS_USER }}
+          # username: ${{ secrets.HISTAC_USERNAME }}
+          privateKey: ${{ secrets.OHRI_DOCS_USER_KEY}}
+          # privateKey: ${{ secrets.HISTAC_KEY}}
           port: ${{ secrets.HISTAC_PORT }}
