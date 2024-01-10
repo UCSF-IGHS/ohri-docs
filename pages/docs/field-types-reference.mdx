@@ -430,7 +430,10 @@ Renders a repeating group field.
   "type":"obsGroup",
   "questionOptions":{
     "rendering":"repeating",
-    "concept":"8acba1d1-67cc-422c-961e-86d6b47bc45b"
+    "concept":"8acba1d1-67cc-422c-961e-86d6b47bc45b",
+    "repeatOptions": {
+      "limitExpression": "useFieldValue('groups_count')"
+    },
   },
   "id":"testObsGroup",
   "questions":[
@@ -473,3 +476,15 @@ Renders a repeating group field.
 Renders:
 
 ![Repeating field](/repeating.png)
+
+The required number of repeatable groups is inferred from the value obtained from the `limitExpression` property in the `repeatOptions` object.
+
+```jsx copy
+  "repeatOptions": {
+      "limitExpression": "useFieldValue('groups_count')"
+    }
+```
+
+If the number of repeated groups in the form does not match the required number specified for the field, a validation error will be thrown.
+
+![obsCountError](/obs-count-error.png)
