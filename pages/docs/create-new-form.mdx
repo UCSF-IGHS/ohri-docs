@@ -2,46 +2,36 @@
 
 ## Introduction
 
-When creating user interface forms in OpenMRS frontends, the AMPATH form builder platform makes this task much easier by partially automating the process.
+The React Form Engine (RFE) form builder platform simplifies and partially automates the process of generating user interface forms in OpenMRS frontends.
 
-## Important links/concepts used in this document:
+## Links and ideas that are important to this text:
 
-- Getting started - https://ampath-forms.vercel.app/getting-started
-- Core concepts - https://ampath-forms.vercel.app/core-concepts
-- Validating fields - https://ampath-forms.vercel.app/validating-fields
-- Field types - https://ampath-forms.vercel.app/field-types-reference
+- Getting started - https://ohri-docs-chi.vercel.app/docs/create-new-form
+- Core concepts - https://ohri-docs-chi.vercel.app/docs/core-concepts/forms
+- Validating fields -https://ohri-docs-chi.vercel.app/docs/validation
+- Field types - https://ohri-docs-chi.vercel.app/docs/field-types-reference
+- Developer Guide - https://ohri-docs-chi.vercel.app/docs/developer-guide/contributing-guide
 
-## What is the AMPATH form builder?
+## What is the RFE form builder?
 
-The AMPATH form builder found at the address: https://openmrs-spa.org/formbuilder is an automation tool/website for auto-generating form schema JSON files which can be later loaded into the Form Engine to auto-create micro-frontend user interface forms.
+The RFE form builder is found at the following addresses: 
+
+- OHRI: https://ohri-dev.globalhealthapp.net/openmrs/spa/form-builder
+- Reference Application: https://dev3.openmrs.org/openmrs/spa/form-builder
+
+The RFE form builder is an automation tool/website for auto-generating form schema JSON files which can be later loaded into the Form Engine to auto-create micro-frontend user interface forms.
 
 This means the UI/UX developer does not have to manually create the user interface forms. And any technical/or non-technical person can use the form builder to generate these form JSON files.
 
-### How to use the AMPATH Form Builder
-
-For macOS Users:
+### How to use the RFE Form Builder
 
 Requirements:
 
-- Make sure the Google Chrome browse is installed.
-
-Open the CLI terminal and run the command:
-
-```copy
-open -a /Applications/Google\ Chrome.app --args --disable-web-security —user-data-dir="/tmp/chrome_tmp"
-```
-
-The command above temporarily disables security in the browser. This is done since the Form builder usually fails to load due to certain security limitations.
-
-This in essence is a ‘hack’ or work-around until this limitation/bug is fixed by AMPATH.
+- Make sure the Google Chrome browse is installed. Any other browser can also be used.
 
 ![Form builder URL in address bar](/form-builder-url.png)
 
-**Note**: There is a warning that running the command above will cause stability and security to suffer. Ignore this warning since it is a temporary hack to get the Form builder running.
-
-After running the command above, the Chrome browser window will open.
-
-In the address bar, enter the form builder URL: https://openmrs-spa.org/formbuilder/.
+In the address bar, enter the form builder URL: OHRI https://ohri-dev.globalhealthapp.net/openmrs/spa/login or RefApp https://dev3.openmrs.org/openmrs/spa/form-builder
 
 ![Form builder URL](/form-builder-url.png)
 
@@ -61,52 +51,69 @@ With the correct details entered above, the platform will log you in. You will l
 
 ![Forms dashboard](/forms-dashboard.png)
 
-Now, click on `+Create New` in the top left corner to create a new Form schema.
+Now, click on `Create New Form` in the top left corner to create a new Form schema.
 
 ![Create new form button](/create-new-form-button.png)
 
-A ‘hamburger’ reveals beside the ‘Form Builder’ link. Click on it to reveal more options.
+Clicking the button will land you in the interface shown below. Note the  `preveiw` and the `Interactive Builder` tabs.
 
-![Schema editor](/schema-editor.png)
+![Create new form](/create_new_form.png)
 
-Enter the form name
+Click on the `Interactive Builder` tab to open the builder page shown below:
 
-![New form](/new-form.png)
+![Interactive Builder](/interactive_builder.png)
 
-A Form can consist of Page(s), under a Page you can create Section(s), and under Section, you can create Form Questions.
+Click on the `Start building` text link. and a popup window asking for the form details will show as below:
 
-**Note**: You can also create Section(s) directly under the Form without a Page.
+![Form name](/form_name.png)
 
-To Create a Page, click on `+Create New Page`
+Click on the `add page` text link below to add a page to your form
 
-![Create a new page](/create-new-page.png)
+![Add page](/add_page.png)
 
-A modal opens, enter the name of the Page
+Add the page name in the pop up text box.
 
-![Create new page modal](/create-page-modal.png)
+![Page](/page_name.png)
 
-Once created, click on the name of the page to expand and reveal more Sections.
+Click on the `Save` button to successfully save the page and proceed.
 
-![Expand sections](/expand-sections.png)
+![Save page](/save_page.png)
 
-Enter the page label and select True under `isExpanded`
+Next, click on the `Add section`  text link to add a section to your form.
 
-![Create section](/create-section.png)
+![Create section](/create_section.png)
 
-Click on the name of the Section label drop-down to reveal the action to create a new Question
+Click `save` to save the section added to form.
 
-![Create new question](/create-new-question.png)
+![Save section](/save_section.png)
 
-Create your questions, providing the relevant details appropriately.
+Click on `Add question` text link to add a question to your form. A question has several metadata which you must add on the popup form entry. These include:
+- `Label`
+- `Question ID`: Must be unique
+- `Question type`
+- `Field Type`
+- `Backing Concept`
+- `Mappings`: Auto generate from concept selected
 
-![Question editor UI](/question-editor.png)
 
-Remember to always save as the form builder sometimes unexpectedly closes without saving your current work.
+![Question](/question.png)
 
-After you are done building all the forms, copy the generated json form schema to your project
+Click `Save` to save the question
 
-![Copy generated JSON schema](/copy-schema.png)
+![Save question](/save_question.png)
 
-Paste the json file to the packages folder under the relevant folder in the OHRI micro-frontend application project or OHRI’s UI editor.
+Click on `Preview Form` tab to view how the form will look like when rendered.
 
-![JSON schema](/json.png)
+![Preview form](/preview_form.png)
+
+Click on the `Save` to save your final form. A popup form entry will appear to allow you enter details that include:
+- `Form name`
+- `Version`
+- `Encounter Type`
+- `Description`
+
+![Save form](/save_form.png)
+
+Finally, the form is ready for adding to the backend for rendering.
+
+![Preview form](/preview_form.png)
