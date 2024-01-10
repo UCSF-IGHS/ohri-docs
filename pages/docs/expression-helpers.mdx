@@ -108,6 +108,46 @@ Example usage:
 }
 ```
 
+## calcHeightForAgeZscore
+
+Takes the height and weight and returns the zscore based on the age of the patients for both Male and Female patients less than 5 years or greater than or equal to 5 years but less than 18 years of age 
+
+Example usage:
+
+```json copy
+{
+"calculate": {
+  "calculateExpression":"calcHeightForAgeZscore( 'height', 'weight')"
+    },
+}
+```
+## calcBMIForAgeZscore
+
+Takes the patient's height and weight and automatically calculates the BMI and returns the zscore for both Male and Female patients greater than or equal to 5 years but less than 18 years of age 
+
+Example usage:
+
+```json copy
+{
+"calculate": {
+  "calculateExpression":"calcBMIForAgeZscore( 'height', 'weight')"
+    },
+}
+```
+## calcWeightForHeightZscore
+
+Takes the patient's height and weight and returns the zscore for both Male and Female patients less than 5 years 
+
+Example usage:
+
+```json copy
+{
+"calculate": {
+  "calculateExpression":"calcWeightForHeightZscore( 'height', 'weight')"
+    },
+}
+```
+
 ## arrayContains
 
 Takes in values in an array and returns true if the values are contained in the source array
