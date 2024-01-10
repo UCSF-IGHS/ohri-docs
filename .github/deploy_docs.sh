@@ -10,8 +10,8 @@ else
     echo "--- ohri-docs folder not found, backup not performed ---"
 fi
 
-# Clone the repository with the reference branch named dev
-git clone --branch dev https://github.com/UCSF-IGHS/ohri-docs.git
+# Clone the repository
+git clone https://github.com/UCSF-IGHS/ohri-docs.git
 
 # Navigate into the cloned directory
 echo "--- Navigate into the cloned directory ---"
