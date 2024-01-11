@@ -477,6 +477,7 @@ Renders:
 
 ![Repeating field](/repeating.png)
 
+
 The required number of repeatable groups is inferred from the value obtained from the `limitExpression` property in the `repeatOptions` object.
 
 ```jsx copy
@@ -488,3 +489,28 @@ The required number of repeatable groups is inferred from the value obtained fro
 If the number of repeated groups in the form does not match the required number specified for the field, a validation error will be thrown.
 
 ![obsCountError](/obs-count-error.png)
+
+## file
+
+Renders a file input control. This allows you to upload files such as images and PDFs. It has options to upload files from computer storage of via camera capture.
+
+```jsx copy
+{
+  "label": "Patient Image",
+  "type": "obs",
+  "questionOptions": {
+    "rendering": "file",
+    "concept": "7db0c435-5696-4aac-aa78-0ef9941de72b"
+  },
+  "id": "patient_image"
+},
+```
+
+Renders:
+
+![Radio field](/file-upload.png)
+
+![Radio field](/file-uploader.png)
+
+![Radio field](/camera-capture.png)
+

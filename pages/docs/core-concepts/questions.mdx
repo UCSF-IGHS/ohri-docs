@@ -89,6 +89,16 @@ Here's a reference of the various properties you can specify in a question defin
 
     ![Answers](/answers.png)
 
+- `questionInfo`: A property that recieves a string containing additional information regarding the field. When hovered over, it displays a tooltip containing the information passed.
+
+  ```json copy
+  {
+    "questionInfo": "sample tooltip info for text"
+  }
+  ```
+
+  ![Tooltip](/tooltip.png)
+
 - `isHidden`: A boolean value that determines field visibility. In most cases, this value is driven by hide expressions.
 
 - `hide`: You can use this to define logic for hiding a question based on certain conditions. To do so, you provide a JavaScript expression that evaluates to a boolean value:
