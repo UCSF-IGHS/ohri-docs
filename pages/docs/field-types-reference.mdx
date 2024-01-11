@@ -473,3 +473,27 @@ Renders a repeating group field.
 Renders:
 
 ![Repeating field](/repeating.png)
+
+## file
+
+Renders a file input control. This allows you to upload files such as images and PDFs. It has options to upload files from computer storage of via camera capture.
+
+```jsx copy
+{
+  "label": "Patient Image",
+  "type": "obs",
+  "questionOptions": {
+    "rendering": "file",
+    "concept": "7db0c435-5696-4aac-aa78-0ef9941de72b"
+  },
+  "id": "patient_image"
+},
+```
+
+Renders:
+
+![Radio field](/file-upload.png)
+
+![Radio field](/file-uploader.png)
+
+![Radio field](/camera-capture.png)
