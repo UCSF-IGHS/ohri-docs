@@ -1,0 +1,84 @@
+# Registering Custom Expressions & Custom Datasources in Form Engine
+
+The Form Engine is designed to cover generic functionality and as such, functionality that is specific to particular implementer should reside in the implementer’s ESM but can be registered in the form engine and consumed whenever required. These should be registered in the Index.ts file in the startupApp function.
+
+## Registering a custom expression:
+
+To register a custom expression, we invoke the `registerExpressionHelper` function. This is a void function and takes 2 parameters:
+
+1. Function Name
+
+2. function
+
+Below is a sample code snippet for registering  custom Expression
+
+```tsx
+//Sample Test Function:
+function AgeCalculator(birthYear, currentYear) {
+  return currentYear - birthYear;
+}
+
+//Registering the function
+export function startupApp() {
+  registerExpressionHelper('customAgeCalc', AgeCalculator);
+}
+```
+
+## Registering a custom datasource:
+
+To register a custom expression, we invoke the `registerCustomDataSource` function. This is a void function and takes 2 parameters:
+
+1. Datasource Name
+
+2. A promise that returns a datasource
+
+Below is a sample code snippet for registering a custom Datasource:
+
+  ```tsx
+//Sample Datasource
+export class TestDatasource implements DataSource<OpenmrsResource> {
+  fetchData(searchTerm: string, config?: Record<string, any>): Promise<any[]> {
+    return new Promise((resolve, reject) => {
+      const data = [
+        {
+          display: 'Kajambiya',
+          uuid: 'U001',
+        },
+        {
+          display: 'Joel',
+          uuid: 'U002',
+        },
+        {
+          display: 'Winslet',
+          uuid: 'U003',
+        },
+      ];
+
+      setTimeout(() => {
+        resolve(data); // Resolve the Promise with the data array
+      }, 1000); // Simulated delay of 1 second
+    });
+  }
+
+  toUuidAndDisplay(data: OpenmrsResource): OpenmrsResource {
+    if (typeof data.uuid === 'undefined' || typeof data.display === 'undefined') {
+      throw new Error("'uuid' or 'display' not found in the OpenMRS object.");
+    }
+      return data;
+    }
+}
+  ```
+
+  ```tsx
+//Registering the Datasource
+export function startupApp() {
+  registerCustomDataSource({
+    name: 'test_datasource',
+    load: () => {
+      return Promise.resolve({
+        default: new TestDatasource(),
+      });
+    },
+  });
+}
+  ```
