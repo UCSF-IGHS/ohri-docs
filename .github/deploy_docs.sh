@@ -21,8 +21,8 @@ ls -la -t
 
 # Install dependencies and build the code
 echo "--- Installing dependencies and building the code ---"
-npx yarn install
-npx yarn build
+npx pnpm install
+npx pnpm build
 
 ls -la -t
 
