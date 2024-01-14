@@ -50,13 +50,13 @@ jobs:
   update_config:
     runs-on: ubuntu-latest
     needs: build
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/OHRI-2107/fix-deploy-ci' }}
 
     steps:
       - name: Checkout repo to make config folder local
         uses: actions/checkout@v3
         with:
-          ref: main
+          ref: OHRI-2107/fix-deploy-ci
       - run: ls -la .github/
 
       - name: Copy Branch main Import Map to remote
@@ -72,7 +72,7 @@ jobs:
   docs_deployment:
     runs-on: ubuntu-latest
     needs: update_config
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/OHRI-2107/fix-deploy-ci' }}
 
     steps:
       # Update the Microfrontends to reflect what we have in the working branch
