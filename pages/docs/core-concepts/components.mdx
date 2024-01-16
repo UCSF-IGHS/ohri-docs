@@ -1,0 +1,100 @@
+# Components
+
+There may be situations where you might want to separate commonly-used form logic into separate reusable bits.
+In such cases, you can structure that logic as a component form. Components can therefore be thought of as reusable forms that carry domain-specific information.
+Imagine a situation where you're creating many forms for use in a Point of Care setting. You might find that multiple forms might need to
+have sections for collecting pre-clinic Review information. This pre-clinic Review information could include details such as:
+
+- Current HIV status
+- Whether a visit was scheduled or not
+- Reasons for a visit
+- Current visit type
+- Patient's insurance information
+
+Now imagine having to define all of these sections and their accompanying questions in each of your forms. Components are the perfect
+tool for such situations.
+
+## Creating Components
+
+To create a component, follow the same procedure of [creating a form](https://ohri-docs.globalhealthapp.net/docs/create-new-form) with the exception being at the point of saving.
+ 1. It is advisable to prefix the name of the component with `component_`. For example, if you're creating a component for pre-clinic review,
+ you could name it `component_pre-clinic-review`.
+ 2. From the dropdown of encounters, you MUST select the encounter type `Component` as shown below:
+
+![Save Component](/images/save_component.png)
+
+After saving, the component will be available in the list of forms and you can filter forms if you only want to view saved components.
+
+![View Components](/images/view_components.png)
+
+The resulting component json will be as shown below;
+
+```json copy
+{
+  "name": "component_pre-clinic-review",
+  "uuid": "xxxx",
+  "processor": "EncounterFormProcessor",
+  "pages": [
+    {
+      "label": "Pre-clinic Review",
+      "sections": [
+        {
+          "label": "Pre-clinic Review",
+          "questions": [
+            {
+              "label": "Current HIV status",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "9e4d6436-4040-46a3-a0ae-6dbc0acfe593",
+                "answers": [
+                  {
+                    "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                    "label": "HIV positive"
+                  },
+                  {
+                    "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                    "label": "HIV negative"
+                  },
+                  {
+                    "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                    "label": "Unknown"
+                  }
+                ]
+              },
+              "validators": []
+            },
+            {
+              "label": "Was the visit scheduled?",
+              "type": "obs",
+              "questionOptions": {
+                "rendering": "select",
+                "concept": "a89c4220-1350-11df-a1f1-0026b9348838",
+                "answers": [
+                  {
+                    "concept": "a899b35e-1350-11df-a1f1-0026b9348838",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                    "label": "No"
+                  }
+                ]
+              },
+              "validators": []
+            },
+            ....
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+```
+
+## Referencing Components
+
+You can construct forms in the Form Builder by referencing components that have already been saved in the system. To do this, follow the steps below:
+
+TBD
