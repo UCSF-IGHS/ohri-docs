@@ -514,3 +514,43 @@ Renders:
 
 ![Radio field](/camera-capture.png)
 
+## ui-select-extended
+
+The ui-select-extended is a searchable combo box used to load values from a data source. It works with both inbuilt datasources and custom datasources.
+
+The currently inbuilt datasources are:
+    - `location_datasource` - A `LocationDataSource` component that fetches `Location` entities with name matching search term entered in the combo box
+    - `drug_datasource` - A `ConceptDataSource` component that fetches `Concept` entities with name matching search term entered in the combo box
+    - `problem_datasource` - A `ConceptDataSource` component that fetches `Concept` entities with name matching search term entered in the combo box
+
+```jsx copy
+{
+  "label": "Location where it occurred (ui-select-extended illustration)",
+  "type": "obs",
+  "required": false,
+  "id": "ui-select-extended-location-illustration",
+  "questionOptions": {
+    "rendering": "ui-select-extended",
+    "datasource": {
+      "name": "location_datasource",
+      "config": {
+        "tag": "e065fcd0-f3a5-432e-8fd6-33d24864d64f"
+      }
+    },
+    "concept": "161011AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  }
+}
+```
+
+Renders:
+
+![UI Select Extended](/ui-select-extended.png)
+
+Under datasource, you pass the datasource name and optionally you can pass a config parameter. For the case of location, in the config, we pass the tag.
+
+The ui-select-extended also has 2 flavours (`preloaded` and `searchable`)
+
+`searchable` means we don't preload the data but instead call the api after the user starts to search. For `searchable`, you would add an extra parameter in the schema - 
+``
+"isSearchable": "true"
+``
