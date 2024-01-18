@@ -78,3 +78,65 @@ The engine exposes an API to work with the registry.
     type: "bootstrapDropdownType",
   });
   ```
+
+## Post Submission Actions
+
+The form-engine supports post-submission actions. A post action is a JS class or function that implements this [interface](https://github.com/openmrs/openmrs-form-engine-lib/blob/881309c3a833001a8b561ade307b800b56184841/src/api/types.ts#L202.). This functional interface requires implementing the ``applyAction(formSession, config)`` function which has the form session context plus an adhoc config. The config makes the actions more generic and configurable hence the ability of reusing the same action for different use-cases.
+
+### How do we register an action?
+The engine utilises the ``registerPostSubmissionAction`` function to register a post submission action.
+
+**Example:**
+
+[HERE](https://github.com/UCSF-IGHS/openmrs-esm-ohri/blob/dev/packages/esm-ohri-pmtct-app/src/post-submission-actions/mother-child-linkage-action.ts) is an example of an action that links mother to infant post delivery and here is how it's registered.
+
+```tsx copy
+
+  registerPostSubmissionAction({
+    name: 'MotherToChildLinkageSubmissionAction',
+    load: () => import('./post-submission-actions/mother-child-linkage-action'),
+  });
+```
+
+Take note that the registration happens in the app's index within the seeder func [startupApp](https://github.com/UCSF-IGHS/openmrs-esm-ohri/blob/f8b67904bdbb074787d00994a6a85b73f2a34531/packages/esm-ohri-pmtct-app/src/index.ts#L37).
+
+After the action is defined and registered, we simply have to reference the action within the target forms.  This is the recommended and new way of doing things.
+```json copy
+"availableIntents":[
+    {
+      "intent":"*",
+      "display":"Labour & Delivery Form"
+    }
+  ],
+  "processor":"EncounterFormProcessor",
+  "uuid":"1e5614d6-5306-11e6-beb8-9e71128cae77",
+  "referencedForms":[],
+  "encounterType":"6dc5308d-27c9-4d49-b16f-2c5e3c759757",
+  "postSubmissionActions": [{"actionId": "MotherToChildLinkageSubmissionAction", "config": { "targetQueue": "Pre-Counselling", "isOptional": true }}],
+  "allowUnspecifiedAll":true,
+  "formOptions": {
+    "usePreviousValueDisabled": "true"
+  }
+```
+NOTE: We can also use the old way of linking post actions we didn't support configuring the actions then, see below. (The form engine still supports the old old way for linking actions)
+
+```json copy
+  "availableIntents": [
+    {
+      "intent": "*",
+      "display": "Labour & Delivery Form"
+    }
+  ],
+  "processor": "EncounterFormProcessor",
+  "uuid": "1e5614d6-5306-11e6-beb8-9e71128cae77",
+  "referencedForms": [],
+  "encounterType": "6dc5308d-27c9-4d49-b16f-2c5e3c759757",
+  "postSubmissionActions": [
+    "MotherToChildLinkageSubmissionAction",
+    "ArtSubmissionAction"
+  ],
+  "allowUnspecifiedAll": true,
+  "formOptions": {
+    "usePreviousValueDisabled": "true"
+  }
+```
