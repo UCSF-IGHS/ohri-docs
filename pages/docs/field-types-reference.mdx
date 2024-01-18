@@ -573,3 +573,23 @@ This will render a dropdown list that is hooked up to a Problem DataSource. This
 Renders:
 
 ![Radio field](/problemRender.gif)
+
+## drug
+
+This Rendering type is used for capturing a drug as an observation. Behind the scenes this is done by introducing the drug data source and utilising functionality of the ui-select-extended control.
+
+```json copy
+{
+  "label": "Select a drug",
+  "type": "obs",
+  "questionOptions": {
+    "rendering": "drug",
+    "concept": "8d490dfc-c2cc-11de-8d13-0010c6dffd0f"
+  },
+  "id": "drug_select"
+},
+```
+
+renders:
+
+![Radio field](/drugRender.gif)
