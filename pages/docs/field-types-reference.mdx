@@ -554,3 +554,22 @@ The ui-select-extended also has 2 flavours (`preloaded` and `searchable`)
 ``
 "isSearchable": "true"
 ``
+## problem
+
+This will render a dropdown list that is hooked up to a Problem DataSource. This field will have answers that have class Diagnosis, Problem or Symptom For example: Reason for hospitalisation: answers such as malaria, fever utilising the ui-select-extended control to render concepts of class Diagnosis and Symptom.
+
+```json copy
+{
+	"label": "Adverse Drug Reaction",
+	"type": "obs",
+	"questionOptions": {
+		"rendering": "problem",
+		"concept": "162297AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+	},
+	"id": "problemID"
+}
+```
+
+Renders:
+
+![Radio field](/problemRender.gif)
