@@ -43,6 +43,7 @@ The resulting component json will be as shown below;
           "questions": [
             {
               "label": "Current HIV status",
+              "id": "currentHivStatus",
               "type": "obs",
               "questionOptions": {
                 "rendering": "select",
@@ -66,6 +67,7 @@ The resulting component json will be as shown below;
             },
             {
               "label": "Was the visit scheduled?",
+              "id": "wasVisitScheduled",
               "type": "obs",
               "questionOptions": {
                 "rendering": "select",
@@ -95,6 +97,74 @@ The resulting component json will be as shown below;
 
 ## Referencing Components
 
-You can construct forms in the Form Builder by referencing components that have already been saved in the system. To do this, follow the steps below:
+You can reference components that have already been saved in the system by adding it the `referencedForms` key to your json form.
 
-TBD
+```json copy
+"referencedForms": [
+  {
+    "formName": "component_preclinic-review",
+    "alias": "pcr"
+  },
+  {
+    "formName": "component_art",
+    "alias": "art"
+  }
+]
+```
+
+### Available visual options
+
+- `form` : The alias of the referenced component form as defined in the `referencedForms` key
+- `page` : The page label of the referenced component form
+- `section` : The section label of the referenced component form to be displayed
+- `excludeQuestions` : An array of question id(s) to be excluded from the referenced section of component form
+
+
+### Example
+Below is the complete json form with 2 components referenced;
+
+```json copy
+{
+  "name": "ART Enrollment Form",
+  "uuid": "xxxx",
+  "encounterType": "xxxx",
+  "processor": "EncounterFormProcessor",
+  "referencedForms": [
+    {
+      "formName": "component_preclinic-review",
+      "alias": "pcr"
+    },
+    {
+      "formName": "component_art",
+      "alias": "art"
+    }
+  ],
+  "pages": [
+    {
+      "label": "Pre-Clinic Review",
+      "sections": [
+        {
+          "reference": {
+            "form": "pcr",
+            "page": "Pre-clinic Review",
+            "section": "Pre-clinic Review"
+          }
+        }
+      ]
+    },
+    {
+      "label": "ART History",
+      "sections": [
+        {
+          "reference": {
+            "form": "art",
+            "page": "ART ",
+            "section": "ART History",
+            "excludeQuestions": ["currentArtRegimen"]
+          }
+        }
+      ]
+    }
+  ]
+}
+```
