@@ -140,3 +140,30 @@ NOTE: We can also use the old way of linking post actions we didn't support conf
     "usePreviousValueDisabled": "true"
   }
 ```
+
+## Program Enrolment
+The `ProgramEnrollmentSubmissionAction` is a generic post submission action that automatically enrols a patient to a specified program upon successful submission of an enncounter. This is passed through the form JSON and the action can either be enabled or disabled based on the expression passed as the `enabled` flag. Below is an example of TB Program enrolment in the TB Case enrolment Form.
+```json copy
+   "postSubmissionActions": [
+    {
+      "actionId": "ProgramEnrollmentSubmissionAction",
+      "enabled":"tbProgramType === '160541AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'",
+      "config": {
+      "enrollmentDate": "tbRegDate",
+      "programUuid": "58005eb2-4560-4ada-b7bb-67a5cffa0a27",
+      "completionDate": "outcomeTBRx"
+    }
+  },
+  {
+    "actionId": "ProgramEnrollmentSubmissionAction",
+    "enabled":"tbProgramType === '160052AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'",
+    "config": {
+    "enrollmentDate": "tbRegDate",
+    "programUuid": "00f37871-0578-4ebc-af1d-e4b3ce75310d",
+    "completionDate": "outcomeTBRx"
+  }
+}
+  ]
+```
+We can add as many post submission actions as we want to one form and only those whose `enabled` flag evaluates to true will be processed.
+
