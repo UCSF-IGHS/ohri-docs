@@ -61,4 +61,4 @@ jobs:
               -o "StrictHostKeyChecking=no" \
               -o "ProxyCommand=ssh -o StrictHostKeyChecking=no -W %h:%p ohri@20.172.182.46 -p 2202" \
               ohri@172.19.0.67 "\
-              cd /opt/build && sh deploy_docs.sh"
+              cd /opt/build && sh deploy_docs.sh &>/dev/null"
