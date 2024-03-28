@@ -1,0 +1,26 @@
+import { Callout } from 'nextra-theme-docs'
+
+# Switching to the React Form Engine for Launching Forms
+
+[OpenMRS 3.x](https://dev3.openmrs.org/openmrs) (O3) has a wrapper for the React Form Engine , just like the angular form engine, which provides the flexibility to switch
+between form engines using import maps. This is because the main form component in the angular form engine and the react form engine are exposed through the `form-widget-slot` and in an instance where the angular form engine is not present, the main form widget can be found in the react form engine through the `form-widget-slot`.
+
+The angular form engine wrapper exists in [esm-form-entry-app](https://github.com/openmrs/openmrs-esm-patient-chart/tree/main/packages/esm-form-entry-app) on the patient chart and the react form engine wrapper exisits in [esm-form-engine-app](https://github.com/openmrs/openmrs-esm-patient-chart/tree/main/packages/esm-form-engine-app) on the patient chart as well.
+To use the react form engine for launching forms, ensure you add the `esm-form-engine-app` to your import map and remove the `esm-form-entry-app` from your import map.
+
+## Steps
+
+Replace this line :
+```
+ "@openmrs/esm-form-entry-app": "next",
+```
+With this line :
+```
+  "@openmrs/esm-form-engine-app": "next",
+```
+in the `frontend/spa-build-config.json` file of your distro or equivalent file that stores import maps in your distro.
+
+<Callout emoji="ℹ️" type="info">
+  In an instance where you have both `esm-form-entry-app` and `esm-form-engine-app` in your import map, the forms will be launched using the angular form engine. To utilize
+  the react form engine, it is recommended to retain `esm-form-engine-app` and remove `esm-form-entry-app` from your import map.
+</Callout>
